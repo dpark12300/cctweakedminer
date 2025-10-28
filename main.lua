@@ -1,4 +1,3 @@
-```C:\Users\wkapl\ComputerCraft Copilot\main.lua#L1-260
 -- main.lua
 -- Strip Miner: Automates making 1-wide, 2-high tunnels for a set distance,
 -- returns to start, shifts over, and repeats for multiple tunnels.
@@ -87,9 +86,7 @@ end
 local function safeForward()
   while not turtle.forward() do
     if turtle.detect() then
-
       turtle.dig()
-
       pause(0.1)
     else
       -- Possibly a mob/entity blocking the way; try attacking then wait briefly
@@ -100,16 +97,10 @@ local function safeForward()
   return true
 end
 
-
-
 local function safeUp()
-
   while not turtle.up() do
-
     if turtle.detectUp() then
-
       turtle.digUp()
-
       pause(0.1)
     else
       turtle.attackUp()
@@ -119,16 +110,10 @@ local function safeUp()
   return true
 end
 
-
-
 local function safeDown()
-
   while not turtle.down() do
-
     if turtle.detectDown() then
-
       turtle.digDown()
-
       pause(0.1)
     else
       turtle.attackDown()
@@ -137,7 +122,6 @@ local function safeDown()
   end
   return true
 end
-
 
 local function turnAround()
   turtle.turnLeft()
@@ -152,22 +136,19 @@ local function placeTorchIfConfigured(step, torchInterval, torchSlot)
   if turtle.getItemCount(torchSlot) == 0 then return end
   local cur = turtle.getSelectedSlot()
   turtle.select(torchSlot)
-
-    -- Prefer placing on the ground (down). If that fails, try left wall, then right wall.
-    if not turtle.placeDown() then
-
+  -- Prefer placing on the ground (down). If that fails, try left wall, then right wall.
+  if not turtle.placeDown() then
+    turtle.turnLeft()
+    if not turtle.place() then
+      turtle.turnRight()
+      turtle.turnRight()
+      turtle.place()
       turtle.turnLeft()
-      if not turtle.place() then
-        turtle.turnRight()
-        turtle.turnRight()
-        turtle.place()
-        turtle.turnLeft()
-      else
-        turtle.turnRight()
-      end
+    else
+      turtle.turnRight()
     end
-    turtle.select(cur)
-
+  end
+  turtle.select(cur)
 end
 
 -- Mine a 1x2 tunnel forward for `length` blocks.
@@ -215,13 +196,9 @@ local function returnToStart(length)
       return false
     end
     if turtle.detect() then turtle.dig() end
-
     safeForward()
-
   end
-
   turnAround() -- face original direction
-
   return true
 end
 
@@ -237,13 +214,9 @@ local function moveRight(gap)
       return false
     end
     if turtle.detect() then turtle.dig() end
-
     safeForward()
-
   end
-
   turtle.turnLeft()
-
   return true
 end
 
@@ -292,34 +265,22 @@ for t = 1, numTunnels do
     print("Stopping early. Tunnel:", t)
     break
   end
-
-
   -- At far end; return to start
-
   print("Returning to start...")
-
   local backOk = returnToStart(length)
-
   if not backOk then
-
     print("Stopped while returning to start.")
     break
   end
-
   -- If more tunnels remain, move right by gap and continue
-
   if t < numTunnels then
-
     print(string.format("Moving right %d blocks to next start...", gap))
-
     local moved = moveRight(gap)
-
     if not moved then
       print("Stopped while shifting to next tunnel.")
       break
     end
   end
-
 end
 
 print("Completed (or stopped). Turtle located at final start position, facing original direction.")
