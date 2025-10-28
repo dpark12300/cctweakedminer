@@ -29,8 +29,8 @@ This repository contains a Lua script for CC:Tweaked (ComputerCraft: Tweaked) th
 ### CC:Tweaked Specific Guidelines
 
 - Always check fuel levels before long operations using `turtle.getFuelLevel()`
-- Use `turtle.detect()`, `turtle.detectUp()`, `turtle.detectDown()` before digging
-- Handle both block obstacles and mob/entity obstacles (attack if detect fails)
+- Use retry-based movement pattern: attempt movement first, then detect and dig/attack if movement fails
+- Handle both block obstacles (detect then dig) and mob/entity obstacles (attack if detect fails)
 - Respect the 16-slot inventory limitation (`MAX_SLOT = 16`)
 - Use `pause()` helper for delays (compatible with both `os.sleep` and `sleep`)
 - Prefer safe movement functions (`safeForward()`, `safeUp()`, `safeDown()`) over direct turtle API calls
