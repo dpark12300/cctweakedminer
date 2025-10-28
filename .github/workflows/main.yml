@@ -1,34 +1,22 @@
-            - name: CraftOS-PC action
-  # You may pin to the exact commit or the version.
-  # uses: Commandcracker/craftos-pc-action@b0669e76122c7a2f32ea3291aa59f7d89ef9b43e
-  uses: Commandcracker/craftos-pc-action@v1.0.2
-  with:
-    # The root directory of the craftos-pc containg a startup.lua
-    root: # optional, default is ./
-    # Specifies the maximum amount of time that the action will run before timing out. "timeout is a floating point number with an optional suffix:" 's' for seconds (the default), 'm' for minutes, 'h' for hours or 'd' for days. A duration of 0 disables the associated timeout.
-    timeout: # optional, default is 60
-    # This will disable mounting the root directory making the root input useless. Use this if root files should be mounted to user data directory.
-    disable_root: # optional
-    # Sets the directory that stores user data. Use disable_root if you want to use the user data computer directory as root!
-    directory: # optional
-    # Setting this will use CraftOS-PC Accelerated (with LuaJIT) instead of default CraftOS-PC (with PUC Lua)
-    luajit: # optional
-    # These are the options that will be passed to CraftOS-PC
-    options: # optional
-    # Setting this will dsiable all CraftOS-PC-Tweaks
-    disable_tweaks: # optional
-    # Setting this will dsiable all default CraftOS-PC settings. This is required if you want to delete .settings for some odd reason.
-    disable_default_settings: # optional
-    # Sets the ID of the computer that will launch
-    id: # optional
-    # specify the signal to be sent on timeout; SIGNAL may be a name like 'HUP' or a number; see 'kill -l' for a list of signals
-    timeout_signal: # optional, default is HUP
-    # This will disable verbose timeout, not printing if a timeout accoured.
-    disable_timeout_verbose: # optional
-    # Defines additional timeout arguments.
-    timeout_arguments: # optional
-    # Setting this will disable the single window render mode. It is not recommended to do this unless you know what you are doing.
-    disable_single: # optional
-    # Setting this will disable the headless render mode. It is not recommended to do this unless you know what you are doing.
-    disable_headless: # optional
-          
+name: CC:Tweaked Miner Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CraftOS-PC action
+        # You may pin to the exact commit or the version.
+        # uses: Commandcracker/craftos-pc-action@b0669e76122c7a2f32ea3291aa59f7d89ef9b43e
+        uses: Commandcracker/craftos-pc-action@v1.0.2
+        with:
+          root: ./  # optional, default is ./
+          timeout: 60  # optional, default is 60
